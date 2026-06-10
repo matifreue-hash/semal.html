@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan Semanal</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#f5f7fb;
+}
+
+/* HEADER */
+header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:10px 15px;
+background:#1f2937;
+color:white;
+}
+
+.title{
+font-size:20px;
+font-weight:bold;
+}
+
+/* MENU */
+.menuBtn{
+font-size:22px;
+cursor:pointer;
+}
+
+.sidebar{
+position:fixed;
+top:0;
+left:-260px;
+width:260px;
+height:100%;
+background:#111827;
+color:white;
+padding:15px;
+transition:0.3s;
+z-index:10;
+}
+
+.sidebar.open{
+left:0;
+}
+
+.sidebar button{
+width:100%;
+margin-top:10px;
+padding:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* NAV WEEK */
+.weekNav{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:15px;
+padding:10px;
+}
+
+.arrow{
+font-size:24px;
+cursor:pointer;
+background:white;
+border-radius:10px;
+padding:5px 12px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* CALENDAR */
+.grid{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:10px;
+padding:15px;
+}
+
+.day{
+background:white;
+border-radius:12px;
+padding:10px;
+min-height:120px;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+position:relative;
+}
+
+.day h3{
+margin:0;
+font-size:14px;
+color:#555;
+}
+
+.meal{
+margin-top:10px;
+font-size:13px;
+}
+
+/* EDIT MODAL */
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+background:rgba(0,0,0,0.5);
+align-items:center;
+justify-content:center;
+}
+
+.modalContent{
+background:white;
+padding:20px;
+border-radius:12px;
+width:300px;
+}
+
+select,input{
+width:100%;
+padding:8px;
+margin-top:8px;
+}
+
+/* BUTTONS */
+.btn{
+margin-top:10px;
+padding:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+width:100%;
+}
+
+.save{background:#22c55e;color:white;}
+.print{background:#3b82f6;color:white;}
+.edit{background:#f59e0b;color:white;}
+
+/* STAR ANIMATION */
+.star{
+position:absolute;
+color:gold;
+animation:float 1s linear forwards;
+}
+
+@keyframes float{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-80px);opacity:0;}
+}
+
+@media print{
+.sidebar, .weekNav, header{display:none;}
+body{background:white;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="menuBtn" onclick="toggleMenu()">☰</div>
+<div class="title">Plan semanal</div>
+<div></div>
+</header>
+
+<div class="sidebar" id="sidebar">
+<h3>Menú</h3>
+
+<button class="print" onclick="window.print()">🖨️ Imprimir</button>
+<button class="edit" onclick="openEdit()">✏️ Cambiar día</button>
+</div>
+
+<div class="weekNav">
+<div class="arrow" onclick="changeWeek(-1)">⬅️</div>
+<div id="weekTitle"></div>
+<div class="arrow" onclick="changeWeek(1)">➡️</div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modalContent">
+
+<h3>Editar día</h3>
+
+<select id="daySelect"></select>
+
+<select id="type">
+<option value="all">Ambos</option>
+<option value="almuerzo">Almuerzo</option>
+<option value="cena">Cena</option>
+</select>
+
+<input id="text" placeholder="Nueva comida">
+
+<button class="btn save" onclick="saveEdit()">Guardar</button>
+
+</div>
+</div>
+
+<script>
+
+let week = 0;
+let data = JSON.parse(localStorage.getItem("menu")) || {};
+
+const baseMeals = [
+"Milanesa de carne","Milanesa de pollo","Bondiola al vino","Bondiola a la cerveza",
+"Pollo al horno","Arroz con pollo","Ravioles","Fideos","Ñokis",
+"Empanadas","Tacos","Pizza","Sopa","Tarta de verdura","Medallones de pescado"
+];
+
+function getMeal(day){
+let key = week+"-"+day;
+
+if(data[key]) return data[key];
+
+let meal = baseMeals[Math.floor(Math.random()*baseMeals.length)];
+
+if(day==6) meal="Milanesa con papas";
+if(day==0) meal="Asado 🔥";
+
+return meal;
+}
+
+function render(){
+
+document.getElementById("grid").innerHTML="";
+
+for(let i=0;i<7;i++){
+
+let div = document.createElement("div");
+div.className="day";
+
+let meal = getMeal(i);
+
+div.innerHTML = `
+<h3>Día ${i+1}</h3>
+<div class="meal">${meal}</div>
+`;
+
+div.onclick=()=>openEdit(i,div);
+
+document.getElementById("grid").appendChild(div);
+}
+
+document.getElementById("weekTitle").innerText = "Semana " + (week+1);
+}
+
+function changeWeek(dir){
+week += dir;
+if(week<0) week=3;
+if(week>3) week=0;
+render();
+}
+
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("open");
+}
+
+function openEdit(day){
+
+document.getElementById("modal").style.display="flex";
+
+let sel = document.getElementById("daySelect");
+sel.innerHTML="";
+
+for(let i=0;i<7;i++){
+sel.innerHTML += `<option value="${i}">Día ${i+1}</option>`;
+}
+sel.value=day;
+}
+
+function saveEdit(){
+
+let day = document.getElementById("daySelect").value;
+let text = document.getElementById("text").value;
+
+let key = week+"-"+day;
+data[key]=text;
+
+localStorage.setItem("menu",JSON.stringify(data));
+
+document.getElementById("modal").style.display="none";
+
+render();
+
+starBurst();
+}
+
+function starBurst(){
+
+for(let i=0;i<10;i++){
+let s=document.createElement("div");
+s.className="star";
+s.innerHTML="✨";
+s.style.left=Math.random()*200+"px";
+s.style.top="50%";
+document.body.appendChild(s);
+
+setTimeout(()=>s.remove(),1000);
+}
+}
+
+render();
+
+</script>
+
+</body>
+</html>
