@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plan Saludable</title>
+<title>Plan Inteligente</title>
 
 <style>
 body{
@@ -30,8 +30,8 @@ padding:15px;
 
 .day{
 background:white;
-border-radius:12px;
 padding:10px;
+border-radius:12px;
 min-height:140px;
 box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
@@ -40,7 +40,8 @@ box-shadow:0 4px 10px rgba(0,0,0,0.1);
 
 .meal{font-size:12px;margin-top:8px}
 
-/* MENU */
+.label{font-weight:bold;color:#2563eb}
+
 .sidebar{
 position:fixed;
 top:0;
@@ -71,8 +72,8 @@ cursor:pointer;
 position:fixed;
 top:0;left:0;
 width:100%;height:100%;
-background:rgba(0,0,0,0.5);
 display:none;
+background:rgba(0,0,0,0.5);
 align-items:center;
 justify-content:center;
 }
@@ -90,36 +91,17 @@ width:280px;
 
 <header>
 <div onclick="toggleMenu()">☰ Menú</div>
-<div>🥗 Plan Saludable</div>
+<div>🍽️ Plan Inteligente</div>
 </header>
 
 <div class="sidebar" id="sidebar">
 
 <h3>Menú</h3>
-<button onclick="openModal()">✏️ Cambiar comida</button>
 <button onclick="toggleMenu()">Cerrar</button>
-
-<div id="shopping"></div>
-<div id="budget"></div>
 
 </div>
 
 <div class="grid" id="grid"></div>
-
-<!-- MODAL -->
-<div class="modal" id="modal">
-<div class="modalContent">
-
-<h3>Cambiar comida</h3>
-
-<select id="day"></select>
-<input id="food" placeholder="Nueva comida">
-
-<button onclick="saveFood()">Guardar</button>
-<button onclick="closeModal()">Cancelar</button>
-
-</div>
-</div>
 
 <script>
 
@@ -127,34 +109,41 @@ width:280px;
 
 let data = JSON.parse(localStorage.getItem("menu")) || {};
 let week = 0;
+let lastDinner = null;
+
+/* ---------------- BASE ---------------- */
+
+const proteins = ["pollo","carne","pescado","huevo"];
+
+const bases = [
+"arroz",
+"ensalada",
+"verduras salteadas",
+"pasta",
+"tarta de verduras"
+];
+
+const dinners = [
+"sopa de verduras",
+"ensalada completa",
+"pollo al horno con verduras",
+"pescado a la plancha con ensalada",
+"tortilla de verduras",
+"fideos con salsa liviana",
+"empanadas al horno"
+];
 
 const days=[
 "Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"
 ];
 
-/* ---------------- HEALTHY MENU ---------------- */
+/* ---------------- MEAL BUILDER ---------------- */
 
-const healthyMeals = [
-"Pollo al horno con verduras",
-"Pescado con ensalada",
-"Arroz integral con pollo",
-"Tacos saludables",
-"Ensalada completa con huevo",
-"Fideos integrales con verduras",
-"Tarta de verdura casera",
-"Lentejas nutritivas"
-];
+function buildMeal(base,protein){
+return `${base} con ${protein}`;
+}
 
-const healthyDinners = [
-"Sopa de verduras",
-"Ensalada ligera",
-"Tostadas con palta y huevo",
-"Yogur con fruta",
-"Verduras salteadas",
-"Omelette saludable"
-];
-
-/* ---------------- FIX DAY ---------------- */
+/* ---------------- DAY LOGIC ---------------- */
 
 function getDay(i){
 
@@ -164,8 +153,8 @@ if(data[key]) return data[key];
 // 🍽️ SÁBADO
 if(i===5){
 return {
-almuerzo:"Milanesa al horno con papas",
-cena:"Pizza casera / empanadas"
+almuerzo:"Milanesa al horno con ensalada",
+cena:"Pizza casera / empanadas al horno"
 };
 }
 
@@ -173,15 +162,47 @@ cena:"Pizza casera / empanadas"
 if(i===6){
 return {
 almuerzo:"Asado con ensalada",
-cena:"Sopa ligera o ensalada"
+cena:"Sopa liviana o verduras"
 };
 }
 
-// 🍽️ NORMAL (SALUDABLE)
-return {
-almuerzo: healthyMeals[Math.floor(Math.random()*healthyMeals.length)],
-cena: healthyDinners[Math.floor(Math.random()*healthyDinners.length)]
-};
+// 🟡 MIÉRCOLES
+if(i===2){
+
+let almuerzo = buildMeal(
+bases[Math.floor(Math.random()*bases.length)],
+proteins[Math.floor(Math.random()*proteins.length)]
+);
+
+let cena = dinners[Math.floor(Math.random()*dinners.length)];
+
+lastDinner = cena;
+
+return {almuerzo, cena};
+}
+
+// 🟡 JUEVES (REUTILIZA CENA MIÉRCOLES)
+if(i===3){
+
+let almuerzo = lastDinner || buildMeal(
+bases[Math.floor(Math.random()*bases.length)],
+proteins[Math.floor(Math.random()*proteins.length)]
+);
+
+let cena = dinners[Math.floor(Math.random()*dinners.length)];
+
+return {almuerzo, cena};
+}
+
+// 🔵 RESTO DE DÍAS
+let almuerzo = buildMeal(
+bases[Math.floor(Math.random()*bases.length)],
+proteins[Math.floor(Math.random()*proteins.length)]
+);
+
+let cena = dinners[Math.floor(Math.random()*dinners.length)];
+
+return {almuerzo, cena};
 }
 
 /* ---------------- RENDER ---------------- */
@@ -195,9 +216,9 @@ for(let i=0;i<7;i++){
 
 let d=getDay(i);
 
-// 🔒 FIX undefined
+// FIX seguridad
 if(!d.almuerzo) d.almuerzo="Comida saludable";
-if(!d.cena) d.cena="Cena ligera";
+if(!d.cena) d.cena="Cena liviana";
 
 let div=document.createElement("div");
 div.className="day";
@@ -205,115 +226,20 @@ div.className="day";
 div.innerHTML=`
 <h3>${days[i]}</h3>
 <div class="meal">
-<b>Almuerzo:</b> ${d.almuerzo}<br>
-<b>Cena:</b> ${d.cena}
+<span class="label">Almuerzo:</span> ${d.almuerzo}<br>
+<span class="label">Cena:</span> ${d.cena}
 </div>
 `;
 
 grid.appendChild(div);
 }
 
-renderBudget();
-renderShopping();
 }
 
 /* ---------------- MENU ---------------- */
 
 function toggleMenu(){
 document.getElementById("sidebar").classList.toggle("open");
-}
-
-/* ---------------- MODAL FIX ---------------- */
-
-function openModal(){
-
-document.getElementById("modal").style.display="flex";
-
-let sel=document.getElementById("day");
-sel.innerHTML="";
-
-for(let i=0;i<7;i++){
-sel.innerHTML+=`<option value="${i}">${days[i]}</option>`;
-}
-
-}
-
-function closeModal(){
-document.getElementById("modal").style.display="none";
-}
-
-function saveFood(){
-
-let day=document.getElementById("day").value;
-let food=document.getElementById("food").value.trim();
-
-// 🔒 FIX undefined / vacío
-if(!food){
-alert("Escribí una comida válida");
-return;
-}
-
-data[week+"-"+day]={almuerzo:food,cena:"Cena saludable"};
-
-localStorage.setItem("menu",JSON.stringify(data));
-
-closeModal();
-render();
-}
-
-/* ---------------- SHOPPING ---------------- */
-
-function renderShopping(){
-
-let items={Pollo:0,Carne:0,Pescado:0,Pasta:0,Verdura:0};
-
-for(let k in data){
-
-let m=[data[k].almuerzo,data[k].cena];
-
-m.forEach(x=>{
-if(!x) return;
-
-if(x.includes("Pollo")) items.Pollo++;
-else if(x.includes("Carne")||x.includes("Milanesa")) items.Carne++;
-else if(x.includes("Pescado")) items.Pescado++;
-else if(x.includes("Fideos")||x.includes("Arroz")) items.Pasta++;
-else items.Verdura++;
-
-});
-}
-
-let html="";
-for(let i in items){
-if(items[i]>0) html+=`<div>🛒 ${i}: ${items[i]}</div>`;
-}
-
-document.getElementById("shopping").innerHTML=html;
-}
-
-/* ---------------- BUDGET ---------------- */
-
-function renderBudget(){
-
-let total=0;
-
-for(let k in data){
-
-let m=[data[k].almuerzo,data[k].cena];
-
-m.forEach(x=>{
-if(!x) return;
-
-if(x.includes("Pollo")) total+=8000;
-else if(x.includes("Carne")||x.includes("Milanesa")) total+=9000;
-else if(x.includes("Pescado")) total+=9000;
-else total+=3000;
-
-});
-}
-
-document.getElementById("budget").innerHTML=
-"💰 Total estimado: $"+total.toLocaleString("es-AR");
 }
 
 /* ---------------- INIT ---------------- */
