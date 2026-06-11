@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plan Semanal</title>
+<title>Plan Semanal Inteligente</title>
 
 <style>
 :root{
@@ -40,8 +40,6 @@ background:var(--header);
 color:white;
 }
 
-.title{font-weight:900}
-
 /* GRID */
 .grid{
 display:grid;
@@ -56,7 +54,6 @@ backdrop-filter: blur(15px);
 border-radius:14px;
 padding:10px;
 min-height:150px;
-box-shadow:0 6px 20px rgba(0,0,0,0.08);
 }
 
 .day h3{margin:0;font-size:14px}
@@ -75,8 +72,8 @@ background:#111827;
 color:white;
 padding:15px;
 transition:0.3s;
-z-index:999;
 overflow:auto;
+z-index:999;
 }
 
 .sidebar.open{left:0}
@@ -96,7 +93,7 @@ cursor:pointer;
 .print{background:#3b82f6;color:white}
 .edit{background:#f59e0b}
 
-/* WEEK NAV */
+/* WEEK */
 .weekNav{
 display:flex;
 justify-content:center;
@@ -134,7 +131,7 @@ canvas{background:white;border-radius:10px;margin-top:10px}
 
 <header>
 <div onclick="toggleMenu()">☰ Menú</div>
-<div class="title">🍽️ Plan Semanal</div>
+<div>🍽️ Plan Semanal</div>
 </header>
 
 <div class="sidebar" id="sidebar">
@@ -188,8 +185,6 @@ canvas{background:white;border-radius:10px;margin-top:10px}
 
 <script>
 
-/* ---------------- DATA ---------------- */
-
 let data = JSON.parse(localStorage.getItem("menu")) || {};
 let week = 0;
 let statsMode = "general";
@@ -198,32 +193,54 @@ const days=[
 "Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"
 ];
 
-const prices={
-"Pollo":8000,
-"Carne":10000,
-"Milanesa":9000,
-"Pescado":9000,
-"Fideos":1500,
-"Ñokis":2000,
-"Ravioles":2500,
-"Verdura":3000,
-"Extras":2500
-};
-
-/* ---------------- DAY ---------------- */
+/* ---------------- DAY LOGIC ---------------- */
 
 function getDay(i){
 
-let key = week+"-"+i;
+let key = week + "-" + i;
 if(data[key]) return data[key];
 
-let a="Variado";
-let c="Variado";
+let almuerzo = "";
+let cena = "";
 
-if(i===5) a="Milanesa con papas";
-if(i===6){a="Asado 🔥";c="—";}
+// 🍽️ DOMINGO
+if(i === 6){
+almuerzo = "Asado 🔥";
+cena = "Parrillada ligera / algo liviano";
+return {almuerzo, cena};
+}
 
-return {almuerzo:a,cena:c};
+// 🍽️ SÁBADO
+if(i === 5){
+almuerzo = "Milanesa con papas";
+cena = "Pizza / empanadas / comida libre";
+return {almuerzo, cena};
+}
+
+// 🍽️ RESTO
+const opciones = [
+"Pollo al horno",
+"Fideos con salsa",
+"Ravioles",
+"Arroz con pollo",
+"Tacos",
+"Tarta de verdura",
+"Bondiola"
+];
+
+almuerzo = opciones[Math.floor(Math.random()*opciones.length)];
+
+let cenas = [
+"Sopa",
+"Empanadas",
+"Fideos",
+"Tostadas con huevo",
+"Ensalada"
+];
+
+cena = cenas[Math.floor(Math.random()*cenas.length)];
+
+return {almuerzo, cena};
 }
 
 /* ---------------- RENDER ---------------- */
@@ -278,58 +295,31 @@ function toggleDark(){
 document.body.classList.toggle("dark");
 }
 
-/* ---------------- EDIT ---------------- */
-
-function openEdit(){
-document.getElementById("modal").style.display="flex";
-
-let sel=document.getElementById("daySelect");
-sel.innerHTML="";
-
-for(let i=0;i<7;i++){
-sel.innerHTML+=`<option value="${i}">${days[i]}</option>`;
-}
-}
-
-function saveEdit(){
-let day=document.getElementById("daySelect").value;
-let text=document.getElementById("text").value;
-
-data[week+"-"+day]={almuerzo:text,cena:text};
-
-localStorage.setItem("menu",JSON.stringify(data));
-document.getElementById("modal").style.display="none";
-render();
-}
-
-/* ---------------- SHOPPING ---------------- */
+/* ---------------- SHOP ---------------- */
 
 function renderShopping(){
 
-let items={
-Pollo:0,Carne:0,Milanesa:0,Pescado:0,Pasta:0,Verdura:0,Extras:0
-};
+let items={};
 
 for(let k in data){
 
 let m=[data[k].almuerzo,data[k].cena];
 
 m.forEach(x=>{
-if(!x||x==="—") return;
+if(!x) return;
 
-if(x.includes("Pollo")) items.Pollo++;
-else if(x.includes("Milanesa")||x.includes("Carne")) items.Carne++;
-else if(x.includes("Pescado")) items.Pescado++;
-else if(x.includes("Fideos")||x.includes("Ñokis")||x.includes("Ravioles")) items.Pasta++;
-else if(x.includes("Verdura")||x.includes("Tomate")) items.Verdura++;
-else items.Extras++;
+if(x.includes("Pollo")) items.Pollo=(items.Pollo||0)+1;
+else if(x.includes("Milanesa")||x.includes("Carne")) items.Carne=(items.Carne||0)+1;
+else if(x.includes("Pescado")) items.Pescado=(items.Pescado||0)+1;
+else if(x.includes("Fideos")||x.includes("Ravioles")) items.Pasta=(items.Pasta||0)+1;
+else items.Extras=(items.Extras||0)+1;
 
 });
 }
 
 let html="";
 for(let i in items){
-if(items[i]>0) html+=`<div>${i}: ${items[i]}</div>`;
+html+=`<div>${i}: ${items[i]}</div>`;
 }
 
 document.getElementById("shoppingList").innerHTML=html;
@@ -346,11 +336,15 @@ for(let k in data){
 let m=[data[k].almuerzo,data[k].cena];
 
 m.forEach(x=>{
-for(let p in prices){
-if(x && x.includes(p)) total+=prices[p];
-}
-});
+if(!x) return;
 
+if(x.includes("Pollo")) total+=8000;
+else if(x.includes("Milanesa")) total+=9000;
+else if(x.includes("Carne")) total+=10000;
+else if(x.includes("Fideos")) total+=1500;
+else if(x.includes("Pescado")) total+=9000;
+
+});
 }
 
 document.getElementById("budget").innerHTML=
@@ -366,13 +360,13 @@ generateStats();
 
 function generateStats(){
 
-let s={Carne:0,Pollo:0,Pasta:0,Pescado:0,Verdura:0,Extras:0};
+let s={Carne:0,Pollo:0,Pasta:0,Pescado:0,Otros:0};
 
 for(let k in data){
 
-let weekIndex=parseInt(k.split("-")[0]);
+let w=parseInt(k.split("-")[0]);
 
-if(statsMode==="month" && weekIndex!==week) continue;
+if(statsMode==="month" && w!==week) continue;
 
 let m=[data[k].almuerzo,data[k].cena];
 
@@ -382,15 +376,13 @@ if(!x) return;
 if(x.includes("Pollo")) s.Pollo++;
 else if(x.includes("Carne")||x.includes("Milanesa")) s.Carne++;
 else if(x.includes("Pescado")) s.Pescado++;
-else if(x.includes("Fideos")||x.includes("Ñokis")) s.Pasta++;
-else if(x.includes("Verdura")) s.Verdura++;
-else s.Extras++;
+else if(x.includes("Fideos")||x.includes("Ravioles")) s.Pasta++;
+else s.Otros++;
 
 });
 }
 
 drawChart(s);
-showStatsText(s);
 }
 
 /* ---------------- CHART ---------------- */
@@ -409,7 +401,7 @@ keys.forEach((k,i)=>{
 
 let h=(s[k]/max)*120;
 
-ctx.fillStyle=["#ef4444","#22c55e","#3b82f6","#f59e0b","#a855f7","#64748b"][i];
+ctx.fillStyle=["#ef4444","#22c55e","#3b82f6","#f59e0b","#a855f7"][i];
 
 ctx.fillRect(i*40+10,140-h,20,h);
 
@@ -426,4 +418,3 @@ render();
 
 </body>
 </html>
-
