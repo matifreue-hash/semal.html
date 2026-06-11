@@ -3,24 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plan Inteligente</title>
+<title>Plan Semanal</title>
 
 <style>
+:root{
+--bg:#f5f7fb;
+--card:#ffffffcc;
+--text:#111;
+--accent:#2563eb;
+--dark:#0f172a;
+}
+
+body.dark{
+--bg:#0b1220;
+--card:#1e293bcc;
+--text:#f9fafb;
+--accent:#60a5fa;
+}
+
 body{
 margin:0;
-font-family:Arial;
-background:#f4f6fb;
-color:#111;
+font-family:-apple-system, Arial;
+background:var(--bg);
+color:var(--text);
+transition:0.3s;
 }
 
+/* HEADER */
 header{
-background:#0f172a;
+background:var(--dark);
 color:white;
-padding:15px;
+padding:14px;
 display:flex;
 justify-content:space-between;
+align-items:center;
 }
 
+.title{font-weight:700}
+
+/* NAV WEEK */
+.weekNav{
+display:flex;
+justify-content:center;
+gap:20px;
+padding:10px;
+font-size:20px;
+font-weight:bold;
+}
+
+.arrow{cursor:pointer}
+
+/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(7,1fr);
@@ -29,19 +62,31 @@ padding:15px;
 }
 
 .day{
-background:white;
-padding:10px;
-border-radius:12px;
-min-height:140px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
+background:var(--card);
+backdrop-filter: blur(10px);
+border-radius:14px;
+padding:12px;
+min-height:150px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
-.day h3{margin:0;font-size:14px}
+.day h3{
+margin:0;
+font-size:14px;
+}
 
-.meal{font-size:12px;margin-top:8px}
+.meal{
+margin-top:10px;
+font-size:13px;
+line-height:1.4;
+}
 
-.label{font-weight:bold;color:#2563eb}
+.label{
+color:var(--accent);
+font-weight:bold;
+}
 
+/* SIDEBAR */
 .sidebar{
 position:fixed;
 top:0;
@@ -52,12 +97,13 @@ background:#111827;
 color:white;
 padding:15px;
 transition:0.3s;
-overflow:auto;
 z-index:999;
+overflow:auto;
 }
 
 .sidebar.open{left:0}
 
+/* BUTTONS */
 button{
 width:100%;
 padding:10px;
@@ -68,12 +114,18 @@ font-weight:bold;
 cursor:pointer;
 }
 
+.darkBtn{background:#111;color:white}
+.editBtn{background:#f59e0b}
+
+/* MODAL */
 .modal{
 position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-display:none;
+top:0;
+left:0;
+width:100%;
+height:100%;
 background:rgba(0,0,0,0.5);
+display:none;
 align-items:center;
 justify-content:center;
 }
@@ -81,7 +133,7 @@ justify-content:center;
 .modalContent{
 background:white;
 padding:20px;
-border-radius:10px;
+border-radius:12px;
 width:280px;
 }
 </style>
@@ -91,17 +143,46 @@ width:280px;
 
 <header>
 <div onclick="toggleMenu()">☰ Menú</div>
-<div>🍽️ Plan Inteligente</div>
+<div class="title">🍽️ Plan Semanal</div>
 </header>
 
+<!-- NAV -->
+<div class="weekNav">
+<div class="arrow" onclick="changeWeek(-1)">⬅️</div>
+<div id="weekTitle"></div>
+<div class="arrow" onclick="changeWeek(1)">➡️</div>
+</div>
+
+<!-- GRID -->
+<div class="grid" id="grid"></div>
+
+<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
 
+<div style="display:flex;justify-content:space-between;align-items:center;">
 <h3>Menú</h3>
-<button onclick="toggleMenu()">Cerrar</button>
+<button onclick="toggleMenu()" style="width:auto">✕</button>
+</div>
+
+<button class="darkBtn" onclick="toggleDark()">🌙 Modo oscuro</button>
+<button class="editBtn" onclick="openEdit()">✏️ Cambiar</button>
 
 </div>
 
-<div class="grid" id="grid"></div>
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modalContent">
+
+<h3>Cambiar comida</h3>
+
+<select id="daySelect"></select>
+<input id="inputFood" placeholder="Nueva comida">
+
+<button onclick="saveEdit()">Guardar</button>
+<button onclick="closeEdit()">Cerrar ✕</button>
+
+</div>
+</div>
 
 <script>
 
@@ -109,41 +190,37 @@ width:280px;
 
 let data = JSON.parse(localStorage.getItem("menu")) || {};
 let week = 0;
-let lastDinner = null;
 
-/* ---------------- BASE ---------------- */
+/* ---------------- DAYS ---------------- */
 
-const proteins = ["pollo","carne","pescado","huevo"];
-
-const bases = [
-"arroz",
-"ensalada",
-"verduras salteadas",
-"pasta",
-"tarta de verduras"
-];
-
-const dinners = [
-"sopa de verduras",
-"ensalada completa",
-"pollo al horno con verduras",
-"pescado a la plancha con ensalada",
-"tortilla de verduras",
-"fideos con salsa liviana",
-"empanadas al horno"
-];
-
-const days=[
+const days = [
 "Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"
 ];
 
-/* ---------------- MEAL BUILDER ---------------- */
+/* ---------------- REAL DINNERS ---------------- */
 
-function buildMeal(base,protein){
-return `${base} con ${protein}`;
-}
+const dinners = [
+"Pollo al horno con verduras",
+"Pescado con ensalada",
+"Arroz con pollo",
+"Tarta de verduras",
+"Fideos con salsa casera",
+"Lentejas completas",
+"Empanadas al horno",
+"Omelette con ensalada"
+];
 
-/* ---------------- DAY LOGIC ---------------- */
+/* ---------------- RANDOM HEALTHY ---------------- */
+
+const healthy = [
+"Pollo con ensalada",
+"Arroz con verduras",
+"Pescado con guarnición",
+"Tarta de verduras",
+"Fideos con salsa suave"
+];
+
+/* ---------------- GET DAY ---------------- */
 
 function getDay(i){
 
@@ -153,56 +230,32 @@ if(data[key]) return data[key];
 // 🍽️ SÁBADO
 if(i===5){
 return {
-almuerzo:"Milanesa al horno con ensalada",
-cena:"Pizza casera / empanadas al horno"
+almuerzo:"Milanesa con papas",
+cena:"Empanadas / pizza casera"
 };
 }
 
-// 🍽️ DOMINGO
+// 🍖 DOMINGO
 if(i===6){
 return {
 almuerzo:"Asado con ensalada",
-cena:"Sopa liviana o verduras"
+cena:"Sopa liviana o pollo con verduras"
 };
 }
 
-// 🟡 MIÉRCOLES
+// 🟡 MIÉRCOLES (2 comidas saludables aleatorias)
 if(i===2){
-
-let almuerzo = buildMeal(
-bases[Math.floor(Math.random()*bases.length)],
-proteins[Math.floor(Math.random()*proteins.length)]
-);
-
-let cena = dinners[Math.floor(Math.random()*dinners.length)];
-
-lastDinner = cena;
-
-return {almuerzo, cena};
+return {
+almuerzo: healthy[Math.floor(Math.random()*healthy.length)],
+cena: healthy[Math.floor(Math.random()*healthy.length)]
+};
 }
 
-// 🟡 JUEVES (REUTILIZA CENA MIÉRCOLES)
-if(i===3){
-
-let almuerzo = lastDinner || buildMeal(
-bases[Math.floor(Math.random()*bases.length)],
-proteins[Math.floor(Math.random()*proteins.length)]
-);
-
-let cena = dinners[Math.floor(Math.random()*dinners.length)];
-
-return {almuerzo, cena};
-}
-
-// 🔵 RESTO DE DÍAS
-let almuerzo = buildMeal(
-bases[Math.floor(Math.random()*bases.length)],
-proteins[Math.floor(Math.random()*proteins.length)]
-);
-
-let cena = dinners[Math.floor(Math.random()*dinners.length)];
-
-return {almuerzo, cena};
+// 🔵 RESTO DÍAS (cenas reales)
+return {
+almuerzo: healthy[Math.floor(Math.random()*healthy.length)],
+cena: dinners[Math.floor(Math.random()*dinners.length)]
+};
 }
 
 /* ---------------- RENDER ---------------- */
@@ -215,10 +268,6 @@ grid.innerHTML="";
 for(let i=0;i<7;i++){
 
 let d=getDay(i);
-
-// FIX seguridad
-if(!d.almuerzo) d.almuerzo="Comida saludable";
-if(!d.cena) d.cena="Cena liviana";
 
 let div=document.createElement("div");
 div.className="day";
@@ -234,12 +283,65 @@ div.innerHTML=`
 grid.appendChild(div);
 }
 
+document.getElementById("weekTitle").innerText="Semana "+(week+1);
+}
+
+/* ---------------- WEEK NAV ---------------- */
+
+function changeWeek(dir){
+week+=dir;
+if(week<0) week=0;
+render();
 }
 
 /* ---------------- MENU ---------------- */
 
 function toggleMenu(){
 document.getElementById("sidebar").classList.toggle("open");
+}
+
+/* ---------------- DARK ---------------- */
+
+function toggleDark(){
+document.body.classList.toggle("dark");
+}
+
+/* ---------------- EDIT ---------------- */
+
+function openEdit(){
+
+let modal=document.getElementById("modal");
+modal.style.display="flex";
+
+let sel=document.getElementById("daySelect");
+sel.innerHTML="";
+
+for(let i=0;i<7;i++){
+sel.innerHTML+=`<option value="${i}">${days[i]}</option>`;
+}
+
+}
+
+function closeEdit(){
+document.getElementById("modal").style.display="none";
+}
+
+function saveEdit(){
+
+let day=document.getElementById("daySelect").value;
+let food=document.getElementById("inputFood").value.trim();
+
+if(!food){
+alert("Escribí una comida válida");
+return;
+}
+
+data[week+"-"+day]={almuerzo:food,cena:"Cena casera"};
+
+localStorage.setItem("menu",JSON.stringify(data));
+
+closeEdit();
+render();
 }
 
 /* ---------------- INIT ---------------- */
