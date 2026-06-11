@@ -40,40 +40,43 @@ background:var(--header);
 color:white;
 }
 
-.title{font-size:24px;font-weight:900}
+.title{font-size:22px;font-weight:900}
 
 /* WEEK */
 .weekNav{
 display:flex;
 justify-content:center;
-gap:20px;
+gap:15px;
 padding:10px;
 font-weight:bold;
 }
 
-.arrow{
-cursor:pointer;
-font-size:22px;
-}
+.arrow{cursor:pointer;font-size:22px}
 
 /* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(7,1fr);
-gap:12px;
-padding:20px;
+gap:10px;
+padding:15px;
+transition:0.3s;
+}
+
+body.menu-open .grid{
+transform:translateX(100px);
+opacity:0.6;
 }
 
 .day{
 background:var(--card);
 backdrop-filter: blur(15px);
-border-radius:18px;
+border-radius:16px;
 padding:12px;
-min-height:170px;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
+min-height:160px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
 }
 
-.day h3{margin:0;font-size:15px}
+.day h3{margin:0;font-size:14px}
 
 .meal{
 margin-top:10px;
@@ -95,6 +98,7 @@ color:white;
 padding:15px;
 transition:0.3s;
 overflow:auto;
+z-index:999;
 }
 
 .sidebar.open{left:0}
@@ -113,7 +117,6 @@ cursor:pointer;
 .print{background:#3b82f6;color:white}
 .edit{background:#f59e0b}
 .darkBtn{background:#111;color:white}
-.shopBtn{background:#22c55e;color:white}
 
 /* MODAL */
 .modal{
@@ -134,18 +137,27 @@ width:300px;
 }
 
 /* CHART */
-canvas{background:white;border-radius:10px;margin-top:10px}
+canvas{
+background:white;
+border-radius:10px;
+margin-top:10px;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<div onclick="toggleMenu()">☰ Plan Semanal</div>
-<div class="title">🍽️ Menú</div>
+<div onclick="toggleMenu()">☰ Menú</div>
+<div class="title">🍽️ Plan Semanal</div>
 </header>
 
 <div class="sidebar" id="sidebar">
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+<h3>Menú</h3>
+<button onclick="toggleMenu()" style="width:auto">✕</button>
+</div>
 
 <button class="darkBtn" onclick="toggleDark()">🌙 Modo</button>
 <button class="print" onclick="window.print()">🖨️ Imprimir</button>
@@ -182,27 +194,21 @@ canvas{background:white;border-radius:10px;margin-top:10px}
 <!-- MODAL -->
 <div class="modal" id="modal">
 <div class="modalContent">
-
 <h3>Editar comida</h3>
 <select id="daySelect"></select>
 <input id="text">
 <button onclick="saveEdit()">Guardar</button>
-
 </div>
 </div>
 
 <script>
 
-/* ---------------- DATA ---------------- */
-
 let week=0;
 let statsMode="general";
 let data=JSON.parse(localStorage.getItem("menu"))||{};
 
-const meals=[
-"Milanesa de carne","Milanesa de pollo","Bondiola","Pollo al horno",
-"Ravioles","Fideos","Ñokis","Pizza","Empanadas","Tacos",
-"Sopa","Tarta de verdura","Pescado","Arroz con pollo"
+const days=[
+"Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"
 ];
 
 const prices={
@@ -218,11 +224,9 @@ const prices={
 "Tacos":3000
 };
 
-/* ---------------- SMART MEALS ---------------- */
-
+/* SMART */
 function smart(last){
-let pool=meals.filter(m=>m!==last);
-return pool[Math.floor(Math.random()*pool.length)];
+return days;
 }
 
 function getDay(i){
@@ -230,8 +234,8 @@ function getDay(i){
 let key=week+"-"+i;
 if(data[key]) return data[key];
 
-let a=smart(null);
-let c=smart(a);
+let a="Comida variada";
+let c="Cena variada";
 
 if(i===6){a="Milanesa con papas";c="—";}
 if(i===0){a="Asado 🔥";c="—";}
@@ -239,8 +243,7 @@ if(i===0){a="Asado 🔥";c="—";}
 return {almuerzo:a,cena:c};
 }
 
-/* ---------------- RENDER ---------------- */
-
+/* RENDER */
 function render(){
 
 document.getElementById("grid").innerHTML="";
@@ -253,7 +256,7 @@ let div=document.createElement("div");
 div.className="day";
 
 div.innerHTML=`
-<h3>Día ${i+1}</h3>
+<h3>${days[i]}</h3>
 <div class="meal">
 <span class="label">Almuerzo:</span> ${d.almuerzo}<br>
 <span class="label">Cena:</span> ${d.cena}
@@ -270,8 +273,7 @@ renderBudget();
 generateStats();
 }
 
-/* ---------------- WEEK ---------------- */
-
+/* WEEK */
 function changeWeek(dir){
 week+=dir;
 if(week<0) week=3;
@@ -279,20 +281,18 @@ if(week>3) week=0;
 render();
 }
 
-/* ---------------- MENU ---------------- */
-
+/* MENU */
 function toggleMenu(){
 document.getElementById("sidebar").classList.toggle("open");
+document.body.classList.toggle("menu-open");
 }
 
-/* ---------------- DARK ---------------- */
-
+/* DARK */
 function toggleDark(){
 document.body.classList.toggle("dark");
 }
 
-/* ---------------- EDIT ---------------- */
-
+/* EDIT */
 function openEdit(){
 document.getElementById("modal").style.display="flex";
 
@@ -300,7 +300,7 @@ let sel=document.getElementById("daySelect");
 sel.innerHTML="";
 
 for(let i=0;i<7;i++){
-sel.innerHTML+=`<option value="${i}">Día ${i+1}</option>`;
+sel.innerHTML+=`<option value="${i}">${days[i]}</option>`;
 }
 }
 
@@ -312,11 +312,11 @@ data[week+"-"+day]={almuerzo:text,cena:text};
 
 localStorage.setItem("menu",JSON.stringify(data));
 document.getElementById("modal").style.display="none";
+
 render();
 }
 
-/* ---------------- SHOPPING ---------------- */
-
+/* SHOP */
 function renderShopping(){
 
 let list={};
@@ -343,8 +343,7 @@ html+=`<div>${i} x${list[i]}</div>`;
 document.getElementById("shoppingList").innerHTML=html;
 }
 
-/* ---------------- BUDGET ---------------- */
-
+/* BUDGET */
 function renderBudget(){
 
 let total=0;
@@ -360,11 +359,10 @@ if(x.includes(p)) total+=prices[p];
 }
 
 document.getElementById("budget").innerHTML=
-"$"+total.toLocaleString();
+"💸 $"+total.toLocaleString("es-AR");
 }
 
-/* ---------------- STATS ---------------- */
-
+/* STATS */
 function setStatsMode(m){
 statsMode=m;
 generateStats();
@@ -386,7 +384,7 @@ if(!x) return;
 if(x.includes("Pollo")) s.Pollo++;
 else if(x.includes("Pescado")) s.Pescado++;
 else if(x.includes("Fideos")||x.includes("Ñokis")||x.includes("Ravioles")) s.Pasta++;
-else if(x.includes("Carne")||x.includes("Milanesa")) s.Carne++;
+else if(x.includes("Milanesa")||x.includes("Carne")||x.includes("Bondiola")) s.Carne++;
 else s.Otros++;
 });
 }
@@ -394,8 +392,7 @@ else s.Otros++;
 drawChart(s);
 }
 
-/* ---------------- CHART ---------------- */
-
+/* CHART */
 function drawChart(s){
 
 let c=document.getElementById("chart");
@@ -404,21 +401,22 @@ let ctx=c.getContext("2d");
 ctx.clearRect(0,0,300,200);
 
 let keys=Object.keys(s);
-let max=Math.max(...Object.values(s));
+let max=Math.max(...Object.values(s),1);
 
 keys.forEach((k,i)=>{
-let h=(s[k]/max)*120||0;
+
+let h=(s[k]/max)*120;
 
 ctx.fillStyle=["#ef4444","#22c55e","#3b82f6","#f59e0b","#64748b"][i];
+
 ctx.fillRect(i*45+10,140-h,25,h);
 
 ctx.fillStyle="#000";
 ctx.fillText(k,i*45+5,155);
+
 });
 
 }
-
-/* ---------------- INIT ---------------- */
 
 render();
 
