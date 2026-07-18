@@ -9,827 +9,2098 @@
 
 <title>Perfumes Ciro</title>
 
-<link rel="stylesheet" href="styles.css">
 
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+
+body{
+
+background:#080808;
+color:white;
+
+}
+
+
+/* HEADER */
+
+
+header{
+
+height:90px;
+
+background:#050505;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:20px 60px;
+
+position:sticky;
+
+top:0;
+
+z-index:1000;
+
+box-shadow:0 0 20px black;
+
+}
+
+
+
+.logo{
+
+font-size:35px;
+
+font-weight:bold;
+
+}
+
+
+.logo span{
+
+color:#d4af37;
+
+}
+
+
+
+nav a{
+
+color:white;
+
+text-decoration:none;
+
+margin:15px;
+
+font-size:18px;
+
+}
+
+
+
+nav a:hover{
+
+color:#d4af37;
+
+}
+
+
+
+.carrito-icono{
+
+font-size:30px;
+
+cursor:pointer;
+
+position:relative;
+
+}
+
+
+
+#contador{
+
+position:absolute;
+
+background:#00c853;
+
+border-radius:50%;
+
+padding:4px 9px;
+
+font-size:13px;
+
+top:-15px;
+
+right:-15px;
+
+}
+
+
+
+
+
+/* HERO */
+
+
+.hero{
+
+height:550px;
+
+
+background:
+
+linear-gradient(
+rgba(0,0,0,.5),
+rgba(0,0,0,.9)
+),
+
+url("https://images.unsplash.com/photo-1541643600914-78b084683601");
+
+
+background-size:cover;
+
+background-position:center;
+
+display:flex;
+
+align-items:center;
+
+padding:60px;
+
+}
+
+
+
+.hero h1{
+
+font-size:75px;
+
+color:#d4af37;
+
+text-shadow:0 0 25px #d4af37;
+
+}
+
+
+
+.hero p{
+
+font-size:25px;
+
+margin:25px 0;
+
+}
+
+
+
+
+.btn{
+
+background:#00c853;
+
+border:none;
+
+color:white;
+
+padding:15px 35px;
+
+border-radius:30px;
+
+font-size:18px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+
+
+.btn:hover{
+
+background:#00e676;
+
+transform:scale(1.05);
+
+}
+
+
+
+
+
+/* BUSCADOR */
+
+
+.buscador{
+
+text-align:center;
+
+padding:40px;
+
+}
+
+
+
+.buscador input{
+
+width:60%;
+
+padding:18px;
+
+border-radius:30px;
+
+border:none;
+
+font-size:18px;
+
+}
+
+
+
+
+
+/* PRODUCTOS */
+
+
+.titulo{
+
+text-align:center;
+
+font-size:45px;
+
+color:#d4af37;
+
+margin:40px;
+
+}
+
+
+
+
+.productos{
+
+
+display:grid;
+
+grid-template-columns:
+
+repeat(auto-fit,minmax(280px,1fr));
+
+
+gap:30px;
+
+padding:40px;
+
+}
+
+
+
+
+.card{
+
+background:#151515;
+
+border-radius:20px;
+
+overflow:hidden;
+
+text-align:center;
+
+padding-bottom:25px;
+
+transition:.4s;
+
+}
+
+
+
+.card:hover{
+
+transform:translateY(-10px);
+
+box-shadow:0 0 25px #d4af37;
+
+}
+
+
+
+
+.card img{
+
+width:100%;
+
+height:320px;
+
+object-fit:cover;
+
+}
+
+
+
+.card h2{
+
+color:#d4af37;
+
+margin:15px;
+
+}
+
+
+
+.card p{
+
+color:#ccc;
+
+padding:10px;
+
+}
+
+
+
+.precio{
+
+font-size:28px;
+
+color:#00c853;
+
+margin:15px;
+
+}
+
+
+.favorito{
+
+background:none;
+
+border:none;
+
+font-size:30px;
+
+cursor:pointer;
+
+}
+
+</style>
+
 
 </head>
 
+
+
 <body>
+
 
 <header>
 
-<h1>PERFUMES CIRO</h1>
 
-<p class="subtitulo">
-Los mejores perfumes árabes al mejor precio
-</p>
+<div class="logo">
 
-<div class="carrito-icono" id="abrirCarrito">
-
-<i class="fas fa-shopping-cart"></i>
-
-<span id="contador">0</span>
+PERFUMES <span>CIRO</span>
 
 </div>
+
+
+
+<nav>
+
+<a href="#">Inicio</a>
+
+<a href="#productos">Perfumes</a>
+
+<a href="#reseñas">Reseñas</a>
+
+</nav>
+
+
+
+<div class="carrito-icono" onclick="abrirCarrito()">
+
+<i class="fa-solid fa-cart-shopping"></i>
+
+<span id="contador">
+
+0
+
+</span>
+
+</div>
+
 
 </header>
 
-<!--=======================-->
-<!-- PRODUCTOS -->
-<!--=======================-->
 
-<section class="productos">
 
-<div class="producto">
 
-<img src="images/khamrah.jpg">
 
-<h2>Lattafa Khamrah</h2>
+<section class="hero">
+
+
+<div>
+
+
+<h1>
+
+PERFUMES CIRO
+
+</h1>
+
 
 <p>
-Perfume dulce con vainilla,
-canela y ámbar.
-Ideal para invierno.
+
+Perfumes árabes premium con esencia oriental.
+
 </p>
 
-<h3>$35.000</h3>
 
-<button class="agregar"
-onclick="agregarCarrito('Lattafa Khamrah',35000,'images/khamrah.jpg')">
-Añadir al carrito
-</button>
+<button class="btn">
 
-<button class="comprar">
 Comprar ahora
+
 </button>
+
 
 </div>
 
-<div class="producto">
-
-<img src="images/asad.jpg">
-
-<h2>Lattafa Asad</h2>
-
-<p>
-Aroma intenso con pimienta,
-vainilla y madera.
-Muy elegante.
-</p>
-
-<h3>$32.000</h3>
-
-<button class="agregar"
-onclick="agregarCarrito('Lattafa Asad',32000,'images/asad.jpg')">
-Añadir al carrito
-</button>
-
-<button class="comprar">
-Comprar ahora
-</button>
-
-</div>
-
-<div class="producto">
-
-<img src="images/yara.jpg">
-
-<h2>Yara</h2>
-
-<p>
-Notas tropicales,
-vainilla y almizcle.
-Muy femenino.
-</p>
-
-<h3>$30.000</h3>
-
-<button class="agregar"
-onclick="agregarCarrito('Yara',30000,'images/yara.jpg')">
-Añadir al carrito
-</button>
-
-<button class="comprar">
-Comprar ahora
-</button>
-
-</div>
-
-<div class="producto">
-
-<img src="images/oud.jpg">
-
-<h2>Oud For Glory</h2>
-
-<p>
-Perfume intenso de oud
-con un toque oriental.
-</p>
-
-<h3>$42.000</h3>
-
-<button class="agregar"
-onclick="agregarCarrito('Oud For Glory',42000,'images/oud.jpg')">
-Añadir al carrito
-</button>
-
-<button class="comprar">
-Comprar ahora
-</button>
-
-</div>
-
-<div class="producto">
-
-<img src="images/fakhar.jpg">
-
-<h2>Fakhar Black</h2>
-
-<p>
-Fragancia fresca y elegante
-para uso diario.
-</p>
-
-<h3>$31.000</h3>
-
-<button class="agregar"
-onclick="agregarCarrito('Fakhar Black',31000,'images/fakhar.jpg')">
-Añadir al carrito
-</button>
-
-<button class="comprar">
-Comprar ahora
-</button>
-
-</div>
 
 </section>
 
-<!--=======================-->
-<!-- CARRITO -->
-<!--=======================-->
 
-<div class="panel-carrito" id="carrito">
 
-<div class="cabecera">
 
-<h2>
-<i class="fas fa-shopping-cart"></i>
-Mi carrito
+<div class="buscador">
+
+
+<input id="buscar"
+
+placeholder="Buscar perfume...">
+
+
+</div>
+
+
+
+
+
+<h2 class="titulo">
+
+Nuestros perfumes
+
 </h2>
 
-<button id="cerrarCarrito">
+
+
+<section class="productos" id="productos">
+
+
+</section><!-- ==========================
+        CARRITO
+========================== -->
+
+
+<div class="carrito-panel" id="carrito">
+
+
+<div class="carrito-titulo">
+
+<h2>
+
+🛒 Mi carrito
+
+</h2>
+
+
+<button onclick="cerrarCarrito()">
 
 X
 
 </button>
 
+
 </div>
+
+
 
 <div id="listaCarrito">
 
 </div>
 
+
+
 <div class="total">
 
-<h2>Total:</h2>
+<h2>
 
-<h2 id="total">$0</h2>
+Total:
+
+<span id="total">
+
+$0
+
+</span>
+
+</h2>
+
+
+<button class="btn" onclick="abrirCompra()">
+
+Comprar
+
+</button>
+
 
 </div>
 
+
 </div>
 
-<!--=======================-->
-<!-- RESEÑAS -->
-<!--=======================-->
 
-<section class="comentarios">
 
-<h1>
 
-<i class="fas fa-comments"></i>
 
-Reseñas
 
-</h1>
 
-<div class="reseña">
+<!-- ==========================
+        FAVORITOS
+========================== -->
 
-<h3>★★★★★</h3>
+
+<section class="favoritos">
+
+
+<h2 class="titulo">
+
+❤️ Favoritos
+
+</h2>
+
+
+<div id="listaFavoritos">
 
 <p>
-Excelente calidad,
-el perfume dura todo el día.
+
+No tienes favoritos todavía.
+
 </p>
 
-<strong>Juan</strong>
 
 </div>
 
-<div class="reseña">
-
-<h3>★★★★★</h3>
-
-<p>
-Llegó rápido y el aroma es increíble.
-</p>
-
-<strong>Camila</strong>
-
-</div>
-
-<div class="reseña">
-
-<h3>★★★★☆</h3>
-
-<p>
-Muy buena presentación,
-volvería a comprar.
-</p>
-
-<strong>Martín</strong>
-
-</div>
-
-<div class="reseña">
-
-<h3>★★★★★</h3>
-
-<p>
-Original y muy buena atención.
-</p>
-
-<strong>Lucía</strong>
-
-</div>
 
 </section>
 
-<script src="script.js"></script>
-
-</body>
-
-</html>/* ========================= */
-/* PERFUMES CIRO - ESTILOS   */
-/* ========================= */
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
 
-body{
-    background:#111;
-    color:white;
-}
 
-/*================ HEADER ================*/
 
-header{
-    background:linear-gradient(90deg,#000,#222,#000);
-    padding:40px;
-    text-align:center;
-    position:sticky;
-    top:0;
-    z-index:100;
-    box-shadow:0 0 20px black;
-}
 
-header h1{
-    color:gold;
-    font-size:70px;
-    letter-spacing:5px;
-    text-shadow:0 0 20px gold;
-}
 
-.subtitulo{
-    margin-top:10px;
-    color:#ddd;
-    font-size:22px;
-}
+<!-- ==========================
+        RESEÑAS
+========================== -->
 
-/*================ CARRITO ================*/
 
-.carrito-icono{
-    position:absolute;
-    right:40px;
-    top:35px;
-    font-size:32px;
-    cursor:pointer;
-    color:white;
-    transition:.3s;
-}
+<section id="reseñas">
 
-.carrito-icono:hover{
-    transform:scale(1.15);
-    color:#00cc66;
-}
 
-#contador{
-    background:red;
-    color:white;
-    border-radius:50%;
-    padding:3px 9px;
-    font-size:14px;
-    position:absolute;
-    top:-10px;
-    right:-12px;
-}
+<h2 class="titulo">
 
-/*================ PRODUCTOS ================*/
+⭐ Reseñas de clientes
 
-.productos{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:30px;
-    padding:40px;
-}
+</h2>
 
-.producto{
 
-    background:#1d1d1d;
 
-    border-radius:18px;
 
-    overflow:hidden;
+<div class="formulario">
 
-    text-align:center;
 
-    transition:.4s;
+<input id="nombre"
 
-    box-shadow:0 0 18px rgba(255,215,0,.15);
+placeholder="Tu nombre">
 
-}
 
-.producto:hover{
 
-    transform:translateY(-8px);
+<select id="estrellas">
 
-    box-shadow:0 0 25px gold;
 
-}
+<option>
 
-.producto img{
+⭐⭐⭐⭐⭐
 
-    width:100%;
+</option>
 
-    height:320px;
 
-    object-fit:cover;
+<option>
 
-}
+⭐⭐⭐⭐
 
-.producto h2{
+</option>
 
-    margin-top:15px;
 
-    color:gold;
+<option>
 
-}
+⭐⭐⭐
 
-.producto p{
+</option>
 
-    color:#ddd;
 
-    padding:15px;
+<option>
 
-    min-height:80px;
+⭐⭐
 
-}
+</option>
 
-.producto h3{
 
-    color:#00ff88;
+<option>
 
-    font-size:28px;
+⭐
 
-    margin-bottom:15px;
+</option>
 
-}
 
-/*================ BOTONES ================*/
 
-button{
+</select>
 
-    border:none;
 
-    cursor:pointer;
 
-    transition:.3s;
+<textarea id="comentario"
 
-    font-size:17px;
+placeholder="Escribe tu experiencia">
 
-    font-weight:bold;
+</textarea>
 
-}
 
-.agregar{
 
-    width:90%;
+<button class="btn"
 
-    background:#00aa55;
+onclick="agregarResena()">
 
-    color:white;
+Publicar reseña
 
-    padding:14px;
+</button>
 
-    border-radius:10px;
 
-    margin-bottom:12px;
 
-}
+</div>
 
-.agregar:hover{
 
-    background:#00cc66;
 
-}
 
-.comprar{
+<div id="resenas">
 
-    width:90%;
+</div>
 
-    background:#009944;
 
-    color:white;
+</section>
 
-    padding:14px;
 
-    border-radius:10px;
 
-    margin-bottom:25px;
 
-}
 
-.comprar:hover{
 
-    background:#00bb55;
+
+<!-- ==========================
+        COMPRA
+========================== -->
+
+
+<div class="modal" id="modalCompra">
+
+
+<div class="modal-contenido">
+
+
+<h2>
+
+Finalizar compra
+
+</h2>
+
+
+<input placeholder="Nombre completo">
+
+
+<input placeholder="Dirección">
+
+
+<input placeholder="Número de teléfono">
+
+
+
+<button class="btn">
+
+Confirmar pedido
+
+</button>
+
+
+
+<button onclick="cerrarCompra()">
+
+Cerrar
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<style>
+
+
+/* CARRITO */
+
+
+.carrito-panel{
+
+
+position:fixed;
+
+right:-450px;
+
+top:0;
+
+width:420px;
+
+height:100vh;
+
+background:white;
+
+color:black;
+
+z-index:2000;
+
+transition:.5s;
+
+overflow:auto;
+
 
 }
 
-/*================ PANEL CARRITO ================*/
 
-.panel-carrito{
 
-    position:fixed;
+.carrito-panel.activo{
 
-    right:-430px;
-
-    top:0;
-
-    width:420px;
-
-    height:100%;
-
-    background:white;
-
-    color:black;
-
-    transition:.5s;
-
-    overflow:auto;
-
-    z-index:999;
-
-    box-shadow:-8px 0 20px rgba(0,0,0,.5);
+right:0;
 
 }
 
-.panel-carrito.activo{
 
-    right:0;
 
-}
+.carrito-titulo{
 
-.cabecera{
 
-    background:#00aa55;
+background:#00c853;
 
-    color:white;
+color:white;
 
-    padding:20px;
+padding:25px;
 
-    display:flex;
+display:flex;
 
-    justify-content:space-between;
+justify-content:space-between;
 
-    align-items:center;
 
 }
 
-#cerrarCarrito{
 
-    background:red;
 
-    color:white;
+.carrito-titulo button{
 
-    padding:10px 15px;
 
-    border-radius:8px;
+background:red;
 
-}
+color:white;
 
-#cerrarCarrito:hover{
+border:none;
 
-    background:#cc0000;
+padding:10px;
 
-}
-
-#listaCarrito{
-
-    padding:20px;
+cursor:pointer;
 
 }
 
-.item{
 
-    display:flex;
 
-    gap:15px;
 
-    margin-bottom:20px;
+.item-carrito{
 
-    border-bottom:1px solid #ddd;
 
-    padding-bottom:15px;
+display:flex;
 
-}
+gap:15px;
 
-.item img{
+padding:20px;
 
-    width:90px;
-
-    height:90px;
-
-    border-radius:10px;
-
-    object-fit:cover;
+border-bottom:1px solid #ddd;
 
 }
 
-.item h4{
 
-    margin-bottom:8px;
+
+.item-carrito img{
+
+
+width:90px;
+
+height:90px;
+
+object-fit:cover;
+
+border-radius:10px;
+
 
 }
+
+
+
+.item-carrito button{
+
+
+padding:5px 10px;
+
+margin:5px;
+
+cursor:pointer;
+
+}
+
+
+
 
 .total{
 
-    padding:25px;
 
-    border-top:2px solid #ccc;
+padding:25px;
 
-    display:flex;
-
-    justify-content:space-between;
-
-    font-size:25px;
-
-    color:#00aa55;
+color:#00c853;
 
 }
 
-/*================ RESEÑAS ================*/
 
-.comentarios{
 
-    margin:50px;
 
-}
 
-.comentarios h1{
 
-    color:gold;
 
-    margin-bottom:30px;
+/* FAVORITOS */
 
-    text-align:center;
 
-    font-size:45px;
+.favoritos{
+
+
+padding:40px;
 
 }
 
-.reseña{
 
-    background:#222;
 
-    padding:25px;
+#listaFavoritos{
 
-    margin-bottom:20px;
 
-    border-radius:15px;
+display:flex;
 
-    transition:.3s;
+justify-content:center;
 
-    box-shadow:0 0 15px rgba(255,215,0,.15);
+gap:20px;
 
-}
+flex-wrap:wrap;
 
-.reseña:hover{
-
-    transform:scale(1.02);
 
 }
 
-.reseña h3{
 
-    color:gold;
 
-    font-size:30px;
 
-    margin-bottom:10px;
 
-}
 
-.reseña p{
 
-    color:#ddd;
+/* FORMULARIO */
 
-    margin-bottom:10px;
 
-}
+.formulario{
 
-.reseña strong{
 
-    color:#00ff88;
+width:400px;
 
-}
+margin:auto;
 
-/*================ SCROLL ================*/
+display:flex;
 
-::-webkit-scrollbar{
+flex-direction:column;
 
-    width:10px;
+gap:15px;
+
 
 }
 
-::-webkit-scrollbar-thumb{
 
-    background:gold;
 
-    border-radius:10px;
+.formulario input,
+.formulario textarea,
+.formulario select{
 
-}
 
-/*================ RESPONSIVE ================*/
+padding:15px;
 
-@media(max-width:768px){
+border-radius:10px;
 
-header h1{
+border:none;
 
-font-size:42px;
+font-size:16px;
 
-}
-
-.carrito-icono{
-
-right:20px;
-
-top:25px;
 
 }
 
-.panel-carrito{
+
+
+
+
+.review{
+
+
+background:#151515;
+
+padding:25px;
+
+margin:20px auto;
+
+width:80%;
+
+border-radius:20px;
+
+
+}
+
+
+
+
+
+
+
+
+/* MODAL */
+
+
+.modal{
+
+
+display:none;
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+
+background:rgba(0,0,0,.8);
+
+
+justify-content:center;
+
+align-items:center;
+
+
+z-index:3000;
+
+
+}
+
+
+
+.modal-contenido{
+
+
+background:white;
+
+color:black;
+
+padding:40px;
+
+border-radius:20px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+width:350px;
+
+
+}
+
+
+
+.modal-contenido input{
+
+
+padding:15px;
+
+
+}
+
+
+
+
+@media(max-width:700px){
+
+
+header{
+
+padding:20px;
+
+}
+
+
+nav{
+
+display:none;
+
+}
+
+
+
+.hero h1{
+
+font-size:45px;
+
+}
+
+
+
+.carrito-panel{
 
 width:100%;
 
 }
 
-.producto img{
 
-height:250px;
+.formulario{
 
-}
-
-}// ================================
-// PERFUMES CIRO
-// ================================
-
-let carrito = [];
-
-const panel = document.getElementById("carrito");
-const abrir = document.getElementById("abrirCarrito");
-const cerrar = document.getElementById("cerrarCarrito");
-const lista = document.getElementById("listaCarrito");
-const total = document.getElementById("total");
-const contador = document.getElementById("contador");
-
-// Abrir carrito
-abrir.addEventListener("click", () => {
-    panel.classList.add("activo");
-});
-
-// Cerrar carrito
-cerrar.addEventListener("click", () => {
-    panel.classList.remove("activo");
-});
-
-// Agregar productos
-function agregarCarrito(nombre, precio, imagen){
-
-    carrito.push({
-        nombre,
-        precio,
-        imagen
-    });
-
-    actualizarCarrito();
-}
-
-// Actualizar carrito
-function actualizarCarrito(){
-
-    lista.innerHTML = "";
-
-    let suma = 0;
-
-    carrito.forEach((producto, index)=>{
-
-        suma += producto.precio;
-
-        lista.innerHTML += `
-
-        <div class="item">
-
-            <img src="${producto.imagen}">
-
-            <div>
-
-                <h4>${producto.nombre}</h4>
-
-                <p>$${producto.precio.toLocaleString()}</p>
-
-                <button
-                onclick="eliminarProducto(${index})"
-                style="
-                background:red;
-                color:white;
-                padding:8px 15px;
-                border:none;
-                border-radius:8px;
-                cursor:pointer;
-                margin-top:8px;
-                ">
-                Eliminar
-                </button>
-
-            </div>
-
-        </div>
-
-        `;
-    });
-
-    total.innerHTML = "$" + suma.toLocaleString();
-
-    contador.innerHTML = carrito.length;
-}
-
-// Eliminar productos
-function eliminarProducto(index){
-
-    carrito.splice(index,1);
-
-    actualizarCarrito();
+width:90%;
 
 }
 
-// Comprar ahora
-const botonesComprar = document.querySelectorAll(".comprar");
 
-botonesComprar.forEach((boton)=>{
 
-    boton.addEventListener("click",()=>{
+}
 
-        alert("¡Gracias por comprar en PERFUMES CIRO!");
+</style><script>
 
-    });
+
+// ===============================
+// PRODUCTOS
+// ===============================
+
+
+const perfumes = [
+
+
+{
+id:1,
+nombre:"Lattafa Khamrah",
+precio:35000,
+imagen:"https://m.media-amazon.com/images/I/61J4LqfM5nL._AC_UF1000,1000_QL80_.jpg",
+descripcion:"Vainilla, canela y ámbar. Aroma dulce y elegante."
+},
+
+
+
+{
+id:2,
+nombre:"Lattafa Asad",
+precio:32000,
+imagen:"https://m.media-amazon.com/images/I/61Yk3vP5Y9L._AC_UF1000,1000_QL80_.jpg",
+descripcion:"Perfume intenso con especias y madera."
+},
+
+
+
+{
+id:3,
+nombre:"Yara Lattafa",
+precio:30000,
+imagen:"https://m.media-amazon.com/images/I/71n7b8HqRGL._AC_UF1000,1000_QL80_.jpg",
+descripcion:"Fragancia femenina con notas dulces."
+},
+
+
+
+{
+id:4,
+nombre:"Oud For Glory",
+precio:42000,
+imagen:"https://m.media-amazon.com/images/I/61kYxQ8X7mL._AC_UF1000,1000_QL80_.jpg",
+descripcion:"Aroma oriental con oud y especias."
+},
+
+
+
+{
+id:5,
+nombre:"Fakhar Black",
+precio:31000,
+imagen:"https://m.media-amazon.com/images/I/61Q8Z6F9JLL._AC_UF1000,1000_QL80_.jpg",
+descripcion:"Fresco, moderno y elegante."
+}
+
+
+
+];
+
+
+
+
+
+let carrito =
+JSON.parse(localStorage.getItem("carrito"))
+|| [];
+
+
+
+let favoritos =
+JSON.parse(localStorage.getItem("favoritos"))
+|| [];
+
+
+
+
+
+
+
+// ELEMENTOS
+
+
+const productosHTML =
+document.getElementById("productos");
+
+
+const contador =
+document.getElementById("contador");
+
+
+const listaCarrito =
+document.getElementById("listaCarrito");
+
+
+const total =
+document.getElementById("total");
+
+
+
+
+
+
+
+
+
+// MOSTRAR PRODUCTOS
+
+
+function mostrarProductos(lista=perfumes){
+
+
+productosHTML.innerHTML="";
+
+
+
+lista.forEach(p=>{
+
+
+productosHTML.innerHTML += `
+
+
+
+<div class="card">
+
+
+<img src="${p.imagen}">
+
+
+
+<button class="favorito"
+onclick="agregarFavorito(${p.id})">
+
+❤️
+
+</button>
+
+
+
+<h2>
+
+${p.nombre}
+
+</h2>
+
+
+
+<p>
+
+${p.descripcion}
+
+</p>
+
+
+
+<div class="precio">
+
+$${p.precio.toLocaleString()}
+
+</div>
+
+
+
+<button class="btn"
+
+onclick="agregarCarrito(${p.id})">
+
+🛒 Añadir al carrito
+
+</button>
+
+
+
+</div>
+
+
+`;
+
+
 
 });
 
-// Animación de entrada
-window.addEventListener("load",()=>{
 
-    document.querySelectorAll(".producto").forEach((card,i)=>{
+}
 
-        card.style.opacity="0";
-        card.style.transform="translateY(40px)";
 
-        setTimeout(()=>{
 
-            card.style.transition=".6s";
+mostrarProductos();
 
-            card.style.opacity="1";
 
-            card.style.transform="translateY(0px)";
 
-        },i*180);
 
-    });
+
+
+
+
+// ===============================
+// CARRITO
+// ===============================
+
+
+
+function agregarCarrito(id){
+
+
+let producto =
+perfumes.find(p=>p.id===id);
+
+
+
+let existe =
+carrito.find(p=>p.id===id);
+
+
+
+if(existe){
+
+
+existe.cantidad++;
+
+
+}else{
+
+
+carrito.push({
+
+...producto,
+
+cantidad:1
 
 });
+
+
+}
+
+
+
+guardar();
+
+mostrarCarrito();
+
+
+}
+
+
+
+
+
+
+
+function mostrarCarrito(){
+
+
+listaCarrito.innerHTML="";
+
+
+let suma=0;
+
+
+
+carrito.forEach(p=>{
+
+
+suma += p.precio*p.cantidad;
+
+
+
+listaCarrito.innerHTML += `
+
+
+<div class="item-carrito">
+
+
+<img src="${p.imagen}">
+
+
+
+<div>
+
+
+<h3>
+
+${p.nombre}
+
+</h3>
+
+
+
+<p>
+
+$${p.precio}
+
+</p>
+
+
+
+<button onclick="menos(${p.id})">
+
+-
+
+</button>
+
+
+
+${p.cantidad}
+
+
+
+<button onclick="mas(${p.id})">
+
++
+
+</button>
+
+
+
+<button onclick="eliminar(${p.id})">
+
+🗑
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+
+total.innerHTML =
+"$"+suma.toLocaleString();
+
+
+
+contador.innerHTML =
+carrito.reduce(
+(a,b)=>a+b.cantidad,
+0
+);
+
+
+
+}
+
+
+
+
+
+
+
+function mas(id){
+
+
+let p =
+carrito.find(x=>x.id===id);
+
+
+p.cantidad++;
+
+
+guardar();
+
+mostrarCarrito();
+
+
+}
+
+
+
+
+
+function menos(id){
+
+
+let p =
+carrito.find(x=>x.id===id);
+
+
+if(p.cantidad>1){
+
+p.cantidad--;
+
+}
+
+else{
+
+eliminar(id);
+
+}
+
+
+
+guardar();
+
+mostrarCarrito();
+
+
+}
+
+
+
+
+
+
+
+function eliminar(id){
+
+
+carrito =
+carrito.filter(
+p=>p.id!==id
+);
+
+
+guardar();
+
+mostrarCarrito();
+
+
+}
+
+
+
+
+
+
+
+function guardar(){
+
+
+localStorage.setItem(
+
+"carrito",
+
+JSON.stringify(carrito)
+
+);
+
+
+localStorage.setItem(
+
+"favoritos",
+
+JSON.stringify(favoritos)
+
+);
+
+
+}
+
+
+
+
+
+
+mostrarCarrito();
+
+
+
+
+
+// ===============================
+// ABRIR CERRAR CARRITO
+// ===============================
+
+
+function abrirCarrito(){
+
+
+document
+.getElementById("carrito")
+.classList.add("activo");
+
+
+}
+
+
+
+function cerrarCarrito(){
+
+
+document
+.getElementById("carrito")
+.classList.remove("activo");
+
+
+}
+
+
+
+
+
+
+
+// ===============================
+// BUSCADOR
+// ===============================
+
+
+
+document
+.getElementById("buscar")
+.addEventListener("input",function(){
+
+
+let texto =
+this.value.toLowerCase();
+
+
+
+let resultado =
+perfumes.filter(p=>
+
+p.nombre.toLowerCase()
+.includes(texto)
+
+);
+
+
+
+mostrarProductos(resultado);
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ===============================
+// FAVORITOS
+// ===============================
+
+
+function agregarFavorito(id){
+
+
+let p =
+perfumes.find(x=>x.id===id);
+
+
+
+if(!favoritos.includes(p)){
+
+
+favoritos.push(p);
+
+
+}
+
+
+
+mostrarFavoritos();
+
+guardar();
+
+
+}
+
+
+
+function mostrarFavoritos(){
+
+
+let caja =
+document.getElementById("listaFavoritos");
+
+
+caja.innerHTML="";
+
+
+
+if(favoritos.length===0){
+
+
+caja.innerHTML=
+"No tienes favoritos";
+
+
+return;
+
+
+}
+
+
+
+favoritos.forEach(p=>{
+
+
+caja.innerHTML+=`
+
+
+<div class="card">
+
+
+<img src="${p.imagen}">
+
+
+<h2>${p.nombre}</h2>
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+}
+
+
+
+mostrarFavoritos();
+
+
+
+
+
+</script><script>
+
+
+// ===============================
+// RESEÑAS
+// ===============================
+
+
+function agregarResena(){
+
+
+let nombre =
+document.getElementById("nombre").value;
+
+
+let estrellas =
+document.getElementById("estrellas").value;
+
+
+let mensaje =
+document.getElementById("comentario").value;
+
+
+
+if(nombre==="" || mensaje===""){
+
+
+alert("Completa todos los campos");
+
+return;
+
+
+}
+
+
+
+
+let reseñas =
+JSON.parse(localStorage.getItem("reseñas"))
+|| [];
+
+
+
+reseñas.push({
+
+nombre:nombre,
+
+estrellas:estrellas,
+
+mensaje:mensaje
+
+});
+
+
+
+localStorage.setItem(
+
+"reseñas",
+
+JSON.stringify(reseñas)
+
+);
+
+
+
+mostrarReseñas();
+
+
+
+document.getElementById("nombre").value="";
+
+document.getElementById("comentario").value="";
+
+
+
+}
+
+
+
+
+function mostrarReseñas(){
+
+
+let caja =
+document.getElementById("resenas");
+
+
+
+caja.innerHTML="";
+
+
+
+let reseñas =
+JSON.parse(localStorage.getItem("reseñas"))
+|| [];
+
+
+
+reseñas.forEach(r=>{
+
+
+caja.innerHTML+=`
+
+
+<div class="review">
+
+
+<h3>
+
+${r.estrellas}
+
+</h3>
+
+
+
+<p>
+
+"${r.mensaje}"
+
+</p>
+
+
+
+<b>
+
+${r.nombre}
+
+</b>
+
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+
+}
+
+
+
+mostrarReseñas();
+
+
+
+
+
+
+// ===============================
+// COMPRA
+// ===============================
+
+
+
+function abrirCompra(){
+
+
+document
+.getElementById("modalCompra")
+.style.display="flex";
+
+
+}
+
+
+
+function cerrarCompra(){
+
+
+document
+.getElementById("modalCompra")
+.style.display="none";
+
+
+}
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+<style>
+
+
+/* ANIMACIONES FINALES */
+
+
+.card,
+.review,
+.btn{
+
+animation:aparecer .5s ease;
+
+}
+
+
+
+@keyframes aparecer{
+
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+
+}
+
+
+
+
+
+/* MEJORAS MOVIL */
+
+
+@media(max-width:700px){
+
+
+
+.logo{
+
+font-size:25px;
+
+}
+
+
+
+.hero{
+
+padding:30px;
+
+}
+
+
+
+.hero h1{
+
+font-size:45px;
+
+}
+
+
+
+.buscador input{
+
+width:90%;
+
+}
+
+
+
+.titulo{
+
+font-size:35px;
+
+}
+
+
+
+}
+
+
+
+
+/* FOOTER */
+
+
+footer{
+
+background:#050505;
+
+text-align:center;
+
+padding:50px;
+
+margin-top:60px;
+
+}
+
+
+footer h2{
+
+color:#d4af37;
+
+}
+
+
+
+.redes{
+
+font-size:35px;
+
+display:flex;
+
+justify-content:center;
+
+gap:30px;
+
+margin-top:20px;
+
+}
+
+
+
+
+</style>
+
+
+
+
+
+<footer>
+
+
+<h2>
+
+PERFUMES CIRO
+
+</h2>
+
+
+<p>
+
+Perfumes árabes premium
+
+</p>
+
+
+
+<div class="redes">
+
+
+<i class="fa-brands fa-instagram"></i>
+
+
+<i class="fa-brands fa-whatsapp"></i>
+
+
+<i class="fa-brands fa-tiktok"></i>
+
+
+</div>
+
+
+</footer>
+
+
+
+
+</body>
+
+</html>
