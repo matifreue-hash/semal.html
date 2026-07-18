@@ -16,6 +16,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 <style>
 
+
 *{
 margin:0;
 padding:0;
@@ -30,6 +31,7 @@ background:#080808;
 color:white;
 
 }
+
 
 
 /* HEADER */
@@ -70,6 +72,7 @@ font-weight:bold;
 }
 
 
+
 .logo span{
 
 color:#d4af37;
@@ -95,38 +98,6 @@ font-size:18px;
 nav a:hover{
 
 color:#d4af37;
-
-}
-
-
-
-.carrito-icono{
-
-font-size:30px;
-
-cursor:pointer;
-
-position:relative;
-
-}
-
-
-
-#contador{
-
-position:absolute;
-
-background:#00c853;
-
-border-radius:50%;
-
-padding:4px 9px;
-
-font-size:13px;
-
-top:-15px;
-
-right:-15px;
 
 }
 
@@ -182,43 +153,9 @@ text-shadow:0 0 25px #d4af37;
 
 font-size:25px;
 
-margin:25px 0;
+margin-top:25px;
 
 }
-
-
-
-
-.btn{
-
-background:#00c853;
-
-border:none;
-
-color:white;
-
-padding:15px 35px;
-
-border-radius:30px;
-
-font-size:18px;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-
-
-.btn:hover{
-
-background:#00e676;
-
-transform:scale(1.05);
-
-}
-
 
 
 
@@ -254,7 +191,7 @@ font-size:18px;
 
 
 
-/* PRODUCTOS */
+/* TITULO */
 
 
 .titulo{
@@ -270,6 +207,9 @@ margin:40px;
 }
 
 
+
+
+/* PRODUCTOS */
 
 
 .productos{
@@ -320,6 +260,7 @@ box-shadow:0 0 25px #d4af37;
 
 
 
+
 .card img{
 
 width:100%;
@@ -329,6 +270,8 @@ height:320px;
 object-fit:cover;
 
 }
+
+
 
 
 
@@ -361,25 +304,9 @@ color:#00c853;
 margin:15px;
 
 }
-
-
-.favorito{
-
-background:none;
-
-border:none;
-
-font-size:30px;
-
-cursor:pointer;
-
-}
-
 </style>
 
-
 </head>
-
 
 
 <body>
@@ -402,23 +329,7 @@ PERFUMES <span>CIRO</span>
 
 <a href="#productos">Perfumes</a>
 
-<a href="#reseñas">Reseñas</a>
-
 </nav>
-
-
-
-<div class="carrito-icono" onclick="abrirCarrito()">
-
-<i class="fa-solid fa-cart-shopping"></i>
-
-<span id="contador">
-
-0
-
-</span>
-
-</div>
 
 
 </header>
@@ -447,13 +358,6 @@ Perfumes árabes premium con esencia oriental.
 </p>
 
 
-<button class="btn">
-
-Comprar ahora
-
-</button>
-
-
 </div>
 
 
@@ -462,15 +366,18 @@ Comprar ahora
 
 
 
+
+
 <div class="buscador">
 
 
-<input id="buscar"
-
+<input 
+id="buscar"
 placeholder="Buscar perfume...">
 
 
 </div>
+
 
 
 
@@ -484,1539 +391,51 @@ Nuestros perfumes
 
 
 
+
+
 <section class="productos" id="productos">
 
 
-</section><!-- ==========================
-        CARRITO
-========================== -->
-
-
-<div class="carrito-panel" id="carrito">
-
-
-<div class="carrito-titulo">
-
-<h2>
-
-🛒 Mi carrito
-
-</h2>
-
-
-<button onclick="cerrarCarrito()">
-
-X
-
-</button>
-
-
-</div>
-
-
-
-<div id="listaCarrito">
-
-</div>
-
-
-
-<div class="total">
-
-<h2>
-
-Total:
-
-<span id="total">
-
-$0
-
-</span>
-
-</h2>
-
-
-<button class="btn" onclick="abrirCompra()">
-
-Comprar
-
-</button>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<!-- ==========================
-        FAVORITOS
-========================== -->
-
-
-<section class="favoritos">
-
-
-<h2 class="titulo">
-
-❤️ Favoritos
-
-</h2>
-
-
-<div id="listaFavoritos">
-
-<p>
-
-No tienes favoritos todavía.
-
-</p>
-
-
-</div>
-
-
 </section>
 
 
 
 
 
-
-
-<!-- ==========================
-        RESEÑAS
-========================== -->
-
-
-<section id="reseñas">
-
-
-<h2 class="titulo">
-
-⭐ Reseñas de clientes
-
-</h2>
-
-
-
-
-<div class="formulario">
-
-
-<input id="nombre"
-
-placeholder="Tu nombre">
-
-
-
-<select id="estrellas">
-
-
-<option>
-
-⭐⭐⭐⭐⭐
-
-</option>
-
-
-<option>
-
-⭐⭐⭐⭐
-
-</option>
-
-
-<option>
-
-⭐⭐⭐
-
-</option>
-
-
-<option>
-
-⭐⭐
-
-</option>
-
-
-<option>
-
-⭐
-
-</option>
-
-
-
-</select>
-
-
-
-<textarea id="comentario"
-
-placeholder="Escribe tu experiencia">
-
-</textarea>
-
-
-
-<button class="btn"
-
-onclick="agregarResena()">
-
-Publicar reseña
-
-</button>
-
-
-
-</div>
-
-
-
-
-<div id="resenas">
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-<!-- ==========================
-        COMPRA
-========================== -->
-
-
-<div class="modal" id="modalCompra">
-
-
-<div class="modal-contenido">
+<footer>
 
 
 <h2>
 
-Finalizar compra
+PERFUMES CIRO
 
 </h2>
 
 
-<input placeholder="Nombre completo">
-
-
-<input placeholder="Dirección">
-
-
-<input placeholder="Número de teléfono">
-
-
-
-<button class="btn">
-
-Confirmar pedido
-
-</button>
-
-
-
-<button onclick="cerrarCompra()">
-
-Cerrar
-
-</button>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<style>
-
-
-/* CARRITO */
-
-
-.carrito-panel{
-
-
-position:fixed;
-
-right:-450px;
-
-top:0;
-
-width:420px;
-
-height:100vh;
-
-background:white;
-
-color:black;
-
-z-index:2000;
-
-transition:.5s;
-
-overflow:auto;
-
-
-}
-
-
-
-.carrito-panel.activo{
-
-right:0;
-
-}
-
-
-
-.carrito-titulo{
-
-
-background:#00c853;
-
-color:white;
-
-padding:25px;
-
-display:flex;
-
-justify-content:space-between;
-
-
-}
-
-
-
-.carrito-titulo button{
-
-
-background:red;
-
-color:white;
-
-border:none;
-
-padding:10px;
-
-cursor:pointer;
-
-}
-
-
-
-
-.item-carrito{
-
-
-display:flex;
-
-gap:15px;
-
-padding:20px;
-
-border-bottom:1px solid #ddd;
-
-}
-
-
-
-.item-carrito img{
-
-
-width:90px;
-
-height:90px;
-
-object-fit:cover;
-
-border-radius:10px;
-
-
-}
-
-
-
-.item-carrito button{
-
-
-padding:5px 10px;
-
-margin:5px;
-
-cursor:pointer;
-
-}
-
-
-
-
-.total{
-
-
-padding:25px;
-
-color:#00c853;
-
-}
-
-
-
-
-
-
-
-/* FAVORITOS */
-
-
-.favoritos{
-
-
-padding:40px;
-
-}
-
-
-
-#listaFavoritos{
-
-
-display:flex;
-
-justify-content:center;
-
-gap:20px;
-
-flex-wrap:wrap;
-
-
-}
-
-
-
-
-
-
-
-/* FORMULARIO */
-
-
-.formulario{
-
-
-width:400px;
-
-margin:auto;
-
-display:flex;
-
-flex-direction:column;
-
-gap:15px;
-
-
-}
-
-
-
-.formulario input,
-.formulario textarea,
-.formulario select{
-
-
-padding:15px;
-
-border-radius:10px;
-
-border:none;
-
-font-size:16px;
-
-
-}
-
-
-
-
-
-.review{
-
-
-background:#151515;
-
-padding:25px;
-
-margin:20px auto;
-
-width:80%;
-
-border-radius:20px;
-
-
-}
-
-
-
-
-
-
-
-
-/* MODAL */
-
-
-.modal{
-
-
-display:none;
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-width:100%;
-
-height:100%;
-
-
-background:rgba(0,0,0,.8);
-
-
-justify-content:center;
-
-align-items:center;
-
-
-z-index:3000;
-
-
-}
-
-
-
-.modal-contenido{
-
-
-background:white;
-
-color:black;
-
-padding:40px;
-
-border-radius:20px;
-
-display:flex;
-
-flex-direction:column;
-
-gap:15px;
-
-width:350px;
-
-
-}
-
-
-
-.modal-contenido input{
-
-
-padding:15px;
-
-
-}
-
-
-
-
-@media(max-width:700px){
-
-
-header{
-
-padding:20px;
-
-}
-
-
-nav{
-
-display:none;
-
-}
-
-
-
-.hero h1{
-
-font-size:45px;
-
-}
-
-
-
-.carrito-panel{
-
-width:100%;
-
-}
-
-
-.formulario{
-
-width:90%;
-
-}
-
-
-
-}
-
-</style><script>
-
-
-// ===============================
-// PRODUCTOS
-// ===============================
-
-
-const perfumes = [
-
-
-{
-id:1,
-nombre:"Lattafa Khamrah",
-precio:35000,
-imagen:"https://m.media-amazon.com/images/I/61J4LqfM5nL._AC_UF1000,1000_QL80_.jpg",
-descripcion:"Vainilla, canela y ámbar. Aroma dulce y elegante."
-},
-
-
-
-{
-id:2,
-nombre:"Lattafa Asad",
-precio:32000,
-imagen:"https://m.media-amazon.com/images/I/61Yk3vP5Y9L._AC_UF1000,1000_QL80_.jpg",
-descripcion:"Perfume intenso con especias y madera."
-},
-
-
-
-{
-id:3,
-nombre:"Yara Lattafa",
-precio:30000,
-imagen:"https://m.media-amazon.com/images/I/71n7b8HqRGL._AC_UF1000,1000_QL80_.jpg",
-descripcion:"Fragancia femenina con notas dulces."
-},
-
-
-
-{
-id:4,
-nombre:"Oud For Glory",
-precio:42000,
-imagen:"https://m.media-amazon.com/images/I/61kYxQ8X7mL._AC_UF1000,1000_QL80_.jpg",
-descripcion:"Aroma oriental con oud y especias."
-},
-
-
-
-{
-id:5,
-nombre:"Fakhar Black",
-precio:31000,
-imagen:"https://m.media-amazon.com/images/I/61Q8Z6F9JLL._AC_UF1000,1000_QL80_.jpg",
-descripcion:"Fresco, moderno y elegante."
-}
-
-
-
-];
-
-
-
-
-
-let carrito =
-JSON.parse(localStorage.getItem("carrito"))
-|| [];
-
-
-
-let favoritos =
-JSON.parse(localStorage.getItem("favoritos"))
-|| [];
-
-
-
-
-
-
-
-// ELEMENTOS
-
-
-const productosHTML =
-document.getElementById("productos");
-
-
-const contador =
-document.getElementById("contador");
-
-
-const listaCarrito =
-document.getElementById("listaCarrito");
-
-
-const total =
-document.getElementById("total");
-
-
-
-
-
-
-
-
-
-// MOSTRAR PRODUCTOS
-
-
-function mostrarProductos(lista=perfumes){
-
-
-productosHTML.innerHTML="";
-
-
-
-lista.forEach(p=>{
-
-
-productosHTML.innerHTML += `
-
-
-
-<div class="card">
-
-
-<img src="${p.imagen}">
-
-
-
-<button class="favorito"
-onclick="agregarFavorito(${p.id})">
-
-❤️
-
-</button>
-
-
-
-<h2>
-
-${p.nombre}
-
-</h2>
-
-
-
 <p>
 
-${p.descripcion}
+Perfumes árabes premium
 
 </p>
 
 
 
-<div class="precio">
-
-$${p.precio.toLocaleString()}
-
-</div>
+<div class="redes">
 
 
+<i class="fa-brands fa-instagram"></i>
 
-<button class="btn"
 
-onclick="agregarCarrito(${p.id})">
+<i class="fa-brands fa-whatsapp"></i>
 
-🛒 Añadir al carrito
 
-</button>
-
+<i class="fa-brands fa-tiktok"></i>
 
 
 </div>
 
 
-`;
-
-
-
-});
-
-
-}
-
-
-
-mostrarProductos();
-
-
-
-
-
-
-
-
-// ===============================
-// CARRITO
-// ===============================
-
-
-
-function agregarCarrito(id){
-
-
-let producto =
-perfumes.find(p=>p.id===id);
-
-
-
-let existe =
-carrito.find(p=>p.id===id);
-
-
-
-if(existe){
-
-
-existe.cantidad++;
-
-
-}else{
-
-
-carrito.push({
-
-...producto,
-
-cantidad:1
-
-});
-
-
-}
-
-
-
-guardar();
-
-mostrarCarrito();
-
-
-}
-
-
-
-
-
-
-
-function mostrarCarrito(){
-
-
-listaCarrito.innerHTML="";
-
-
-let suma=0;
-
-
-
-carrito.forEach(p=>{
-
-
-suma += p.precio*p.cantidad;
-
-
-
-listaCarrito.innerHTML += `
-
-
-<div class="item-carrito">
-
-
-<img src="${p.imagen}">
-
-
-
-<div>
-
-
-<h3>
-
-${p.nombre}
-
-</h3>
-
-
-
-<p>
-
-$${p.precio}
-
-</p>
-
-
-
-<button onclick="menos(${p.id})">
-
--
-
-</button>
-
-
-
-${p.cantidad}
-
-
-
-<button onclick="mas(${p.id})">
-
-+
-
-</button>
-
-
-
-<button onclick="eliminar(${p.id})">
-
-🗑
-
-</button>
-
-
-</div>
-
-
-</div>
-
-
-`;
-
-
-});
-
-
-
-total.innerHTML =
-"$"+suma.toLocaleString();
-
-
-
-contador.innerHTML =
-carrito.reduce(
-(a,b)=>a+b.cantidad,
-0
-);
-
-
-
-}
-
-
-
-
-
-
-
-function mas(id){
-
-
-let p =
-carrito.find(x=>x.id===id);
-
-
-p.cantidad++;
-
-
-guardar();
-
-mostrarCarrito();
-
-
-}
-
-
-
-
-
-function menos(id){
-
-
-let p =
-carrito.find(x=>x.id===id);
-
-
-if(p.cantidad>1){
-
-p.cantidad--;
-
-}
-
-else{
-
-eliminar(id);
-
-}
-
-
-
-guardar();
-
-mostrarCarrito();
-
-
-}
-
-
-
-
-
-
-
-function eliminar(id){
-
-
-carrito =
-carrito.filter(
-p=>p.id!==id
-);
-
-
-guardar();
-
-mostrarCarrito();
-
-
-}
-
-
-
-
-
-
-
-function guardar(){
-
-
-localStorage.setItem(
-
-"carrito",
-
-JSON.stringify(carrito)
-
-);
-
-
-localStorage.setItem(
-
-"favoritos",
-
-JSON.stringify(favoritos)
-
-);
-
-
-}
-
-
-
-
-
-
-mostrarCarrito();
-
-
-
-
-
-// ===============================
-// ABRIR CERRAR CARRITO
-// ===============================
-
-
-function abrirCarrito(){
-
-
-document
-.getElementById("carrito")
-.classList.add("activo");
-
-
-}
-
-
-
-function cerrarCarrito(){
-
-
-document
-.getElementById("carrito")
-.classList.remove("activo");
-
-
-}
-
-
-
-
-
-
-
-// ===============================
-// BUSCADOR
-// ===============================
-
-
-
-document
-.getElementById("buscar")
-.addEventListener("input",function(){
-
-
-let texto =
-this.value.toLowerCase();
-
-
-
-let resultado =
-perfumes.filter(p=>
-
-p.nombre.toLowerCase()
-.includes(texto)
-
-);
-
-
-
-mostrarProductos(resultado);
-
-
-
-});
-
-
-
-
-
-
-
-
-
-// ===============================
-// FAVORITOS
-// ===============================
-
-
-function agregarFavorito(id){
-
-
-let p =
-perfumes.find(x=>x.id===id);
-
-
-
-if(!favoritos.includes(p)){
-
-
-favoritos.push(p);
-
-
-}
-
-
-
-mostrarFavoritos();
-
-guardar();
-
-
-}
-
-
-
-function mostrarFavoritos(){
-
-
-let caja =
-document.getElementById("listaFavoritos");
-
-
-caja.innerHTML="";
-
-
-
-if(favoritos.length===0){
-
-
-caja.innerHTML=
-"No tienes favoritos";
-
-
-return;
-
-
-}
-
-
-
-favoritos.forEach(p=>{
-
-
-caja.innerHTML+=`
-
-
-<div class="card">
-
-
-<img src="${p.imagen}">
-
-
-<h2>${p.nombre}</h2>
-
-
-</div>
-
-
-`;
-
-
-});
-
-
-}
-
-
-
-mostrarFavoritos();
-
-
-
-
-
-</script><script>
-
-
-// ===============================
-// RESEÑAS
-// ===============================
-
-
-function agregarResena(){
-
-
-let nombre =
-document.getElementById("nombre").value;
-
-
-let estrellas =
-document.getElementById("estrellas").value;
-
-
-let mensaje =
-document.getElementById("comentario").value;
-
-
-
-if(nombre==="" || mensaje===""){
-
-
-alert("Completa todos los campos");
-
-return;
-
-
-}
-
-
-
-
-let reseñas =
-JSON.parse(localStorage.getItem("reseñas"))
-|| [];
-
-
-
-reseñas.push({
-
-nombre:nombre,
-
-estrellas:estrellas,
-
-mensaje:mensaje
-
-});
-
-
-
-localStorage.setItem(
-
-"reseñas",
-
-JSON.stringify(reseñas)
-
-);
-
-
-
-mostrarReseñas();
-
-
-
-document.getElementById("nombre").value="";
-
-document.getElementById("comentario").value="";
-
-
-
-}
-
-
-
-
-function mostrarReseñas(){
-
-
-let caja =
-document.getElementById("resenas");
-
-
-
-caja.innerHTML="";
-
-
-
-let reseñas =
-JSON.parse(localStorage.getItem("reseñas"))
-|| [];
-
-
-
-reseñas.forEach(r=>{
-
-
-caja.innerHTML+=`
-
-
-<div class="review">
-
-
-<h3>
-
-${r.estrellas}
-
-</h3>
-
-
-
-<p>
-
-"${r.mensaje}"
-
-</p>
-
-
-
-<b>
-
-${r.nombre}
-
-</b>
-
-
-
-</div>
-
-
-`;
-
-
-});
-
-
-
-}
-
-
-
-mostrarReseñas();
-
-
-
-
-
-
-// ===============================
-// COMPRA
-// ===============================
-
-
-
-function abrirCompra(){
-
-
-document
-.getElementById("modalCompra")
-.style.display="flex";
-
-
-}
-
-
-
-function cerrarCompra(){
-
-
-document
-.getElementById("modalCompra")
-.style.display="none";
-
-
-}
-
-
-
-
-
-
-
-</script>
-
-
-
-
-
-<style>
-
-
-/* ANIMACIONES FINALES */
-
-
-.card,
-.review,
-.btn{
-
-animation:aparecer .5s ease;
-
-}
-
-
-
-@keyframes aparecer{
-
-
-from{
-
-opacity:0;
-
-transform:translateY(20px);
-
-}
-
-
-to{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-
-}
-
-
-
-
-
-/* MEJORAS MOVIL */
-
-
-@media(max-width:700px){
-
-
-
-.logo{
-
-font-size:25px;
-
-}
-
-
-
-.hero{
-
-padding:30px;
-
-}
-
-
-
-.hero h1{
-
-font-size:45px;
-
-}
-
-
-
-.buscador input{
-
-width:90%;
-
-}
-
-
-
-.titulo{
-
-font-size:35px;
-
-}
-
-
-
-}
-
-
-
-
-/* FOOTER */
+</footer><style>
 
 
 footer{
@@ -2057,48 +476,246 @@ margin-top:20px;
 
 
 
-</style>
+
+@media(max-width:700px){
+
+
+header{
+
+padding:20px;
+
+}
+
+
+
+.logo{
+
+font-size:25px;
+
+}
+
+
+
+nav{
+
+display:none;
+
+}
+
+
+
+.hero{
+
+padding:30px;
+
+}
+
+
+
+.hero h1{
+
+font-size:45px;
+
+}
+
+
+
+.buscador input{
+
+width:90%;
+
+}
+
+
+
+.titulo{
+
+font-size:35px;
+
+}
+
+
+
+.card img{
+
+height:280px;
+
+}
+
+
+}
+
+
+</style><script>
+
+
+const perfumes = [
+
+
+{
+nombre:"Lattafa Khamrah",
+precio:35000,
+imagen:"https://m.media-amazon.com/images/I/61J4LqfM5nL._AC_UF1000,1000_QL80_.jpg",
+descripcion:"Vainilla, canela y ámbar. Aroma dulce y elegante."
+},
+
+
+
+{
+nombre:"Lattafa Asad",
+precio:32000,
+imagen:"https://m.media-amazon.com/images/I/61Yk3vP5Y9L._AC_UF1000,1000_QL80_.jpg",
+descripcion:"Perfume intenso con especias y madera."
+},
+
+
+
+{
+nombre:"Yara Lattafa",
+precio:30000,
+imagen:"https://m.media-amazon.com/images/I/71n7b8HqRGL._AC_UF1000,1000_QL80_.jpg",
+descripcion:"Fragancia femenina con notas dulces."
+},
+
+
+
+{
+nombre:"Oud For Glory",
+precio:42000,
+imagen:"https://m.media-amazon.com/images/I/61kYxQ8X7mL._AC_UF1000,1000_QL80_.jpg",
+descripcion:"Aroma oriental con oud y especias."
+},
+
+
+
+{
+nombre:"Fakhar Black",
+precio:31000,
+imagen:"https://m.media-amazon.com/images/I/61Q8Z6F9JLL._AC_UF1000,1000_QL80_.jpg",
+descripcion:"Fresco, moderno y elegante."
+}
+
+
+];
 
 
 
 
 
-<footer>
+
+const productosHTML =
+document.getElementById("productos");
+
+
+
+
+
+
+function mostrarProductos(lista = perfumes){
+
+
+productosHTML.innerHTML = "";
+
+
+
+lista.forEach(p => {
+
+
+
+productosHTML.innerHTML += `
+
+
+<div class="card">
+
+
+<img src="${p.imagen}">
+
 
 
 <h2>
 
-PERFUMES CIRO
+${p.nombre}
 
 </h2>
 
 
+
 <p>
 
-Perfumes árabes premium
+${p.descripcion}
 
 </p>
 
 
 
-<div class="redes">
+<div class="precio">
 
+$${p.precio.toLocaleString("es-AR")}
 
-<i class="fa-brands fa-instagram"></i>
+</div>
 
-
-<i class="fa-brands fa-whatsapp"></i>
-
-
-<i class="fa-brands fa-tiktok"></i>
 
 
 </div>
 
 
-</footer>
+`;
 
 
+
+});
+
+
+}
+
+
+
+
+
+
+
+mostrarProductos();
+
+
+
+
+
+
+
+// BUSCADOR
+
+
+document
+.getElementById("buscar")
+.addEventListener("input", function(){
+
+
+
+let texto = this.value.toLowerCase();
+
+
+
+let resultado = perfumes.filter(p =>
+
+
+p.nombre
+.toLowerCase()
+.includes(texto)
+
+
+);
+
+
+
+mostrarProductos(resultado);
+
+
+
+});
+
+
+
+</script>
 
 
 </body>
